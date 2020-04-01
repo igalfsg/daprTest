@@ -1,0 +1,36 @@
+environment: development
+
+apphost: k8s
+
+label:
+  name: helmtutorial
+
+container:
+  frontEndName: k8sfrontend
+  backEndName: k8sbackend
+  daprbackEndName: daprbackend
+  pullPolicy: IfNotPresent
+  frontEndImage: devigsandle.azurecr.io/k8sfrontend
+  backEndImage: devigsandle.azurecr.io/k8sbackend
+  daprbackEndImage: devigsandle.azurecr.io/k8sbackend
+  namespace: dev
+  frontEndTag: v1
+  backEndTag: v6
+  daprbackEndTag: v6
+  frontEndport: 80
+  frontEndServiceport: 9778
+  backEndport: 80
+  daprbackendport: 80
+  backEndServiceport: 9368
+  daprbackEndServiceport: 3000
+frontEndreplicas: 1
+backEndreplicas: 3
+
+certificate:
+  appdnsname: devigsandle.eastus.cloudapp.azure.com
+  certtype: letsencrypt-staging
+  email: igsandle@microsoft.com
+  certserver: https://acme-staging-v02.api.letsencrypt.org/directory
+service:
+  port: 8888
+  type: ClusterIP
