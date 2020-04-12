@@ -88,7 +88,7 @@ else
     private DaprClient client;
     protected override void OnInitialized()
     {
-        client = new DaprClientBuilder().UseEndpoint("https://127.0.0.1:50001").Build();
+        client = new DaprClientBuilder().Build();
         postForecast = Enumerable.Range(1, 5).Select(index => new WeatherForecast
             {
                 Date = DateTime.Now.AddDays(index),
@@ -182,12 +182,12 @@ else
         Task t;
         daprRESTParallel = "loading";
         Stopwatch watch = new Stopwatch();
-        watch.Start();
         for(int i = 0; i < 500; i++)
         {
             t =  _httpService.CallGetPollylessAsync("http://localhost:3500/v1.0/invoke/daprbackend/method/WeatherForecast");
             TaskList.Add(t);
         }
+        watch.Start();
         await Task.WhenAll(TaskList);
         watch.Stop();
         daprRESTParallel = watch.Elapsed.TotalMilliseconds.ToString();        
@@ -217,12 +217,12 @@ else
         metaData.Add("http.verb", "GET");
         daprgRPCParallel = "loading";
         Stopwatch watch = new Stopwatch();
-        watch.Start();
         for(int i = 0; i < 500; i++)
         {
             t =  client.InvokeMethodAsync<IEnumerable<WeatherForecast>>("daprbackend", "WeatherForecast", metaData).AsTask();
             TaskList.Add(t);
         }
+        watch.Start();
         IEnumerable<WeatherForecast>[] results = await Task.WhenAll(TaskList);
         watch.Stop();
         daprgRPCParallel = watch.Elapsed.TotalMilliseconds.ToString();
