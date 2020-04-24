@@ -8,21 +8,16 @@ label:
 container:
   frontEndName: k8sfrontend
   backEndName: k8sbackend
-  daprbackEndName: daprbackend
   pullPolicy: IfNotPresent
   frontEndImage: devigsandleacr.azurecr.io/k8sfrontend
   backEndImage: devigsandleacr.azurecr.io/k8sbackend
-  daprbackEndImage: devigsandleacr.azurecr.io/k8sbackend
   namespace: devigsandle
-  frontEndTag: v14
-  backEndTag: v7
-  daprbackEndTag: v7
+  frontEndTag: v11
+  backEndTag: v1
   frontEndport: 80
   frontEndServiceport: 9877
   backEndport: 80
-  daprbackendport: 80
   backEndServiceport: 9368
-  daprbackEndServiceport: 9875
 frontEndreplicas: 1
 backEndreplicas: 3
 
